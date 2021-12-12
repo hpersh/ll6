@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm -f test.l golden.out
+
+gawk -f extract.awk $1

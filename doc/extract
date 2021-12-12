@@ -1,0 +1,45 @@
+#!/bin/bash
+
+function filename_to_modname {
+    basename -s .l $(basename -s .c $1)
+}
+
+function modname_to_filename {
+    f=../src/${1}.c
+    if [ -e $f ]
+    then
+	echo $f
+    fi
+    f=../libs/${1}.l
+    if [ -e $f ]
+    then
+	echo $f
+    fi
+}
+
+function extract1 {
+    echo "# Module: $1" >> doc.md
+    gawk -f extract.awk $(modname_to_filename $1) >> doc.md
+}
+
+rm -fr doc.md
+
+extract1 main
+
+li=''
+for f in ../src/*.c ../libs/*.l
+do
+    if [ $f = ../src/main.c ]
+    then
+	continue
+    fi
+    if [ "$li" != '' ]
+    then
+	li="$li "
+    fi
+    li="${li}$(filename_to_modname $f)"
+done
+for m in $(echo $li | tr ' ' '\n' | sort)
+do
+    extract1 $m
+done

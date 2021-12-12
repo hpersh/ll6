@@ -1,0 +1,8 @@
+*~
+*#
+*.so
+*.md
+bin/ll
+test/test.*
+test/*.out
+.vscode

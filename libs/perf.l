@@ -1,0 +1,5 @@
+(setq limit (int (at argv 1)))
+(setq i 0)
+(while (lt i limit)
+  (setq i (add i 1))
+  )
